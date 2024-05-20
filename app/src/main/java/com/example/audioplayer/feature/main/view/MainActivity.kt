@@ -1,6 +1,5 @@
 package com.example.audioplayer.feature.main.view
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,12 +22,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,9 +39,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModel()
-    private val isPlayer = mutableStateOf(false)
-    private val audioLength = mutableFloatStateOf(0f)
-    private val audioProgress = mutableFloatStateOf(0f)
+    private val isPlaying: MutableState<Boolean> = mutableStateOf(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +87,7 @@ class MainActivity : ComponentActivity() {
                         )
                         .align(Alignment.Center)
                 ) {
-                    val playerIcon = if (isPlayer.value) R.drawable.pause else R.drawable.play
+                    val playerIcon = if (isPlaying.value) R.drawable.pause else R.drawable.play
 
                     Image(
                         painter = painterResource(id = playerIcon),
@@ -101,9 +97,10 @@ class MainActivity : ComponentActivity() {
                             .padding(start = 10.dp)
                             .size(50.dp)
                             .clickable {
-                                isPlayer.value = !isPlayer.value
+                                isPlaying.value = !isPlaying.value
                             }
                     )
+                    val textTime = if(isPlaying.value) viewModel.audioProgress else viewModel.audioLength
                     Text(
                         text = "0:20",
                         color = Color.White,
@@ -112,7 +109,7 @@ class MainActivity : ComponentActivity() {
                             .padding(start = 5.dp)
                     )
                     LinearProgressIndicator(
-                        progress = audioProgress.floatValue,
+                        progress = viewModel.audioProgress.floatValue,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 20.dp, end = 20.dp)
