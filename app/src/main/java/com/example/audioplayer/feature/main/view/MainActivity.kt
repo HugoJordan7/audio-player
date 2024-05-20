@@ -1,4 +1,4 @@
-package com.example.audioplayer
+package com.example.audioplayer.feature.main.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    RandomAudioPLayer()
                 }
             }
         }
@@ -30,17 +30,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun RandomAudioPLayer() {
+
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     AudioPlayerTheme {
-        Greeting("Android")
+        RandomAudioPLayer()
     }
 }

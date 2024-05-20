@@ -51,6 +51,11 @@ android {
 
 dependencies {
 
+    val exo_version = "2.15.1"
+
+    implementation("com.google.android.exoplayer:exoplayer-core:$exo_version")
+    implementation("com.google.android.exoplayer:exoplayer-ui:$exo_version")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
