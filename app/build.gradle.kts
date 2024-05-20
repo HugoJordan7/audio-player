@@ -52,9 +52,12 @@ android {
 dependencies {
 
     val exo_version = "2.15.1"
+    val koin_version = "3.5.0"
 
     implementation("com.google.android.exoplayer:exoplayer-core:$exo_version")
     implementation("com.google.android.exoplayer:exoplayer-ui:$exo_version")
+
+    implementation ("io.insert-koin:koin-android:$koin_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

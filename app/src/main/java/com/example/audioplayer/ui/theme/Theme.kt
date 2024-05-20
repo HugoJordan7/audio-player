@@ -1,6 +1,7 @@
 package com.example.audioplayer.ui.theme
 
 import android.app.Activity
+import android.content.res.ColorStateList
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -57,7 +58,7 @@ fun AudioPlayerTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = Purple80.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }

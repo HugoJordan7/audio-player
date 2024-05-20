@@ -1,5 +1,6 @@
 package com.example.audioplayer.feature.main.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -27,15 +28,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.audioplayer.R
+import com.example.audioplayer.feature.main.viewModel.MainViewModel
 import com.example.audioplayer.ui.theme.AudioPlayerTheme
+import com.example.audioplayer.ui.theme.Purple80
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
+    private val viewModel: MainViewModel by viewModel()
     private val isPlayer = mutableStateOf(false)
     private val audioLength = mutableFloatStateOf(0f)
     private val audioProgress = mutableFloatStateOf(0f)
@@ -65,8 +70,8 @@ class MainActivity : ComponentActivity() {
                     .background(color = MaterialTheme.colorScheme.background),
             ) {
                 Button(
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.purple_500)),
+                    onClick = { viewModel.findRandomAudioPlayer(this@MainActivity) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Purple80),
                     modifier = Modifier
                         .align(Alignment.Center)
                         .width(300.dp)
@@ -81,12 +86,13 @@ class MainActivity : ComponentActivity() {
                         .width(300.dp)
                         .height(100.dp)
                         .background(
-                            color = colorResource(id = R.color.purple_500),
+                            color = Purple80,
                             shape = RoundedCornerShape(20.dp)
                         )
                         .align(Alignment.Center)
                 ) {
                     val playerIcon = if (isPlayer.value) R.drawable.pause else R.drawable.play
+
                     Image(
                         painter = painterResource(id = playerIcon),
                         contentDescription = "",
