@@ -1,8 +1,6 @@
 package com.example.audioplayer.feature.main.viewModel
 
 import android.content.Context
-import androidx.compose.runtime.FloatState
-import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableFloatStateOf
@@ -10,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.Player
-import androidx.media3.common.Timeline
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.audioplayer.service.repository.ExoPlayerRepository
 import kotlinx.coroutines.delay
@@ -58,6 +55,9 @@ class MainViewModel(private val exoPlayerRepository: ExoPlayerRepository) : View
                                     val duration = formatAudioDuration(result.duration)
                                     _audioLength.value = duration
                                 }
+                                Player.STATE_ENDED->{
+
+                                }
                             }
                         }
 
@@ -85,9 +85,11 @@ class MainViewModel(private val exoPlayerRepository: ExoPlayerRepository) : View
 
     private fun resetAudioPlayer(){
         _playerState.value?.stop()
+        _playerState.value?.release()
         _playerState.value = null
         _audioProgress.value = 0.00f
         _audioLength.value = "0:00"
+        _formatAudioProgress.value = "0:00"
     }
 
     private fun updateAudioProgress(player: ExoPlayer) {

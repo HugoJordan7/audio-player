@@ -35,6 +35,8 @@ import com.example.audioplayer.R
 import com.example.audioplayer.feature.main.viewModel.MainViewModel
 import com.example.audioplayer.ui.theme.AudioPlayerTheme
 import com.example.audioplayer.ui.theme.Purple80
+import com.example.audioplayer.ui.theme.PurpleGrey40
+import com.example.audioplayer.ui.theme.PurpleGrey80
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -112,7 +114,9 @@ class MainActivity : ComponentActivity() {
                         progress = viewModel.audioProgress.value,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
-                            .padding(start = 20.dp, end = 20.dp)
+                            .padding(start = 20.dp, end = 20.dp),
+                        color = Color.White,
+                        trackColor = PurpleGrey80
                     )
                 }
                 Button(
