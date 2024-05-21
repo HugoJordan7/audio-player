@@ -1,6 +1,7 @@
 package com.example.audioplayer
 
 import android.app.Application
+import com.example.audioplayer.di.repositoryModule
 import com.example.audioplayer.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -17,6 +18,7 @@ class App: Application() {
             modules(
                 listOf(
                     viewModelModule,
+                    repositoryModule
                 )
             )
         }

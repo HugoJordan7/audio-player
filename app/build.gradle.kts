@@ -51,11 +51,13 @@ android {
 
 dependencies {
 
+    val old_exo_version = "1.3.1"
     val exo_version = "2.15.1"
     val koin_version = "3.5.0"
 
-    implementation("com.google.android.exoplayer:exoplayer-core:$exo_version")
-    implementation("com.google.android.exoplayer:exoplayer-ui:$exo_version")
+    implementation("androidx.media3:media3-exoplayer:$old_exo_version")
+    implementation("androidx.media3:media3-exoplayer-dash:$old_exo_version")
+    implementation("androidx.media3:media3-ui:$old_exo_version")
 
     implementation ("io.insert-koin:koin-android:$koin_version")
 

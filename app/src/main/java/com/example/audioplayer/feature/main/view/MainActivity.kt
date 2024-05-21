@@ -1,6 +1,7 @@
 package com.example.audioplayer.feature.main.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -65,17 +66,12 @@ class MainActivity : ComponentActivity() {
                     .fillMaxSize()
                     .background(color = MaterialTheme.colorScheme.background),
             ) {
-                Button(
-                    onClick = { viewModel.findRandomAudioPlayer(this@MainActivity) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Purple80),
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .width(300.dp)
-                        .offset(y = 100.dp)
-                ) {
-                    Text(text = "Random audio")
-                    Image(painter = painterResource(id = R.drawable.dice), contentDescription = "")
-
+                if (viewModel.isFailed.value) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        viewModel.errorMessage.value,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 Row(
                     modifier = Modifier
@@ -98,22 +94,41 @@ class MainActivity : ComponentActivity() {
                             .size(50.dp)
                             .clickable {
                                 isPlaying.value = !isPlaying.value
+                                if (isPlaying.value) {
+                                    viewModel.playerState.value?.play()
+                                } else {
+                                    viewModel.playerState.value?.pause()
+                                }
                             }
                     )
-                    val textTime = if(isPlaying.value) viewModel.audioProgress else viewModel.audioLength
                     Text(
-                        text = "0:20",
+                        text = if (isPlaying.value) viewModel.formatAudioProgress.value else viewModel.audioLength.value,
                         color = Color.White,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 5.dp)
                     )
                     LinearProgressIndicator(
-                        progress = viewModel.audioProgress.floatValue,
+                        progress = viewModel.audioProgress.value,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(start = 20.dp, end = 20.dp)
                     )
+                }
+                Button(
+                    onClick = {
+                        viewModel.findRandomAudioPlayer(this@MainActivity)
+                        isPlaying.value = false
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Purple80),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .width(300.dp)
+                        .offset(y = 100.dp)
+                ) {
+                    Text(text = "Random audio")
+                    Image(painter = painterResource(id = R.drawable.dice), contentDescription = "")
+
                 }
             }
         }
